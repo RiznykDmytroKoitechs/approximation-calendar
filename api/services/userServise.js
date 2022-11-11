@@ -1,11 +1,9 @@
-const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
 const uuid = require('uuid')
 var User = require("../models/user")
 
 class UserService {
     async createUser(username, email, password) {
-        return this.getUser(email).then((res)=>{
+        return this.getUserByEmail(email).then((res)=>{
             if(res) {
                 throw new Error("User already exists")
             }
@@ -23,8 +21,18 @@ class UserService {
         
     }
 
-    async getUser(email){
+    async getUserByEmail(email){
         return User.findOne({where:{email:email}})
+        .then((res)=>{
+            return res
+        })
+        .catch((err)=>{
+            throw new Error(err)
+        })
+    }
+
+    getUserByID(id){
+        return User.findOne({where:{id:id}})
         .then((res)=>{
             return res
         })
@@ -39,17 +47,11 @@ class UserService {
             res.forEach((val)=>{
                 dataVals.push(val.dataValues)
             })
-            console.log(dataVals)
             return(dataVals)
         }).catch((err)=>{
             throw new Error(err)
         })
     }
-
-    generateAccessToken(username){
-        return jwt.sign(username,dotenv.env.TOKEN_SECRET, {expiresIn:'30s'})
-    }
-
 }
 
 module.exports = new UserService

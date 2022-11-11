@@ -1,11 +1,24 @@
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
+var UserService = require('./userServise')
+
 
 class AuthService {
-    
+    generateAccessToken(id){
+        return jwt.sign({id},process.env.TOKEN_SECRET, {expiresIn:'1h'})
+    }
 
-    generateAccessToken(username){
-        return jwt.sign(username,dotenv.env.TOKEN_SECRET, {expiresIn:'30s'})
+    login(email, password){
+        return UserService.getUserByEmail(email).then((result)=>{
+            if(!result){
+                throw new Error("Email is invalid!")
+            }
+            else if (result.password != password) {
+                throw new Error("Password is invalid")
+            }
+            else {
+                return this.generateAccessToken(result.id)
+            }
+        })
     }
 
 }

@@ -21,7 +21,7 @@ body('email').isEmail().withMessage('Email is invalid'),
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
+  
   const body = req.body
   UserService.createUser(body.username, body.email, body.password)
   .then((result)=>{
