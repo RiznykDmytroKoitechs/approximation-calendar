@@ -6,6 +6,7 @@ var JwtStrategy = require('passport-jwt').Strategy
 var ExtractJwt = require('passport-jwt').ExtractJwt
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors')
 
 var passport = require('passport')
 var { Sequelize } = require('sequelize');
@@ -73,6 +74,7 @@ app.use(session({
     httpOnly:false
   }
 }))
+app.use(cors())
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json());
@@ -83,7 +85,7 @@ passport.use('jwt', JWTStrategy)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
-app.use('/entry', entryRouter)
+app.use('/entries', entryRouter)
 
 
 // catch 404 and forward to error handler
@@ -94,6 +96,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.log(err)
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

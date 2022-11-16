@@ -1,7 +1,9 @@
 var express = require('express');
 var UserService = require('../services/userServise')
+var AuthService = require('../services/authServise')
 var router = express.Router();
 const { body, validationResult } = require('express-validator');
+const authServise = require('../services/authServise');
 
 router.get('/', (req, res, next) => {
   UserService.getUsers().then((result)=>{
@@ -23,12 +25,12 @@ body('email').isEmail().withMessage('Email is invalid'),
   }
   
   const body = req.body
-  UserService.createUser(body.username, body.email, body.password)
+  authServise.register(body.username, body.email, body.password)
   .then((result)=>{
     res.send(result)
   }).catch((err)=>{
     console.log(err)
-    res.status(400).send(err.message)
+    res.status(400).send({message:err.message})
   })
 })
 

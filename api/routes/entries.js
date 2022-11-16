@@ -33,7 +33,7 @@ body('hours').isFloat({min:0.01, max:10}).withMessage("Enter a valid amount of h
         res.send({token:result});
     }).catch((err)=>{
         console.log(err)
-        res.status(404).send(err)
+        res.status(400).send({message:err.message})
     })
 })
 
@@ -52,7 +52,7 @@ body('id').isUUID('4').withMessage("Invalid ID"),
         res.send({token:result});
     }).catch((err)=>{
         console.log(err)
-        res.status(404).send(err)
+        res.status(400).send({message:err.message})
     })
 })
 
@@ -73,7 +73,7 @@ body('page').optional().isInt({min:0}).withMessage("Invalid page"),
     })
     .catch((err)=>{
         console.log(err)
-        res.status(404).send(err)
+        res.status(400).send({message:err.message})
     })
 })
 

@@ -2,7 +2,7 @@ const uuid = require('uuid')
 var User = require("../models/user")
 
 class UserService {
-    async createUser(username, email, password) {
+    createUser(username, email, password) {
         return this.getUserByEmail(email).then((res)=>{
             if(res) {
                 throw new Error("User already exists")
@@ -21,7 +21,7 @@ class UserService {
         
     }
 
-    async getUserByEmail(email){
+    getUserByEmail(email){
         return User.findOne({where:{email:email}})
         .then((res)=>{
             return res
@@ -41,7 +41,7 @@ class UserService {
         })
     }
     
-    async getUsers(){
+    getUsers(){
         return User.findAll().then((res)=>{
             let dataVals = []
             res.forEach((val)=>{

@@ -49,25 +49,46 @@ class EntryServise {
         })
     }
 
-    getEntriesByUserId(userId, paginationAmount = 20, page = 0){
-        return Entry.findAll({
-            where:{ownerId:userId},
-            offset: page*paginationAmount,
-            limit: paginationAmount,
-            order:[['date', "DESC"]]
-        }).then((res)=>{
-            let dataVals = []
-            res.forEach((val)=>{
-                dataVals.push({
-                    id:val.dataValues.id,
-                    date:val.dataValues.date,
-                    hours:val.dataValues.numberOfHours,
-                    comment:val.dataValues.comment
-                })   
+    getEntriesByUserId(userId, paginationAmount, page = 0){
+        if(paginationAmount){
+            return Entry.findAll({
+                where:{ownerId:userId},
+                offset:page*paginationAmount,
+                limit:paginationAmount,
+                order:[['date', "DESC"]]
+            }).then((res)=>{
+                let dataVals = []
+                res.forEach((val)=>{
+                    dataVals.push({
+                        id:val.dataValues.id,
+                        date:val.dataValues.date,
+                        hours:val.dataValues.numberOfHours,
+                        comment:val.dataValues.comment
+                    })   
+                })
+                console.log(dataVals)
+                return(dataVals)
             })
-            console.log(dataVals)
-            return(dataVals)
-        })
+        }
+        else{
+            return Entry.findAll({
+                where:{ownerId:userId},
+                order:[['date', "DESC"]]
+            }).then((res)=>{
+                let dataVals = []
+                res.forEach((val)=>{
+                    dataVals.push({
+                        id:val.dataValues.id,
+                        date:val.dataValues.date,
+                        hours:val.dataValues.numberOfHours,
+                        comment:val.dataValues.comment
+                    })   
+                })
+                console.log(dataVals)
+                return(dataVals)
+            })
+        }
+        
     }
 }
 

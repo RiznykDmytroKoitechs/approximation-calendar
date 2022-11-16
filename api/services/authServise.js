@@ -8,7 +8,8 @@ class AuthService {
     }
 
     login(email, password){
-        return UserService.getUserByEmail(email).then((result)=>{
+        return UserService.getUserByEmail(email)
+        .then((result)=>{
             if(!result){
                 throw new Error("Email is invalid!")
             }
@@ -16,8 +17,15 @@ class AuthService {
                 throw new Error("Password is invalid")
             }
             else {
-                return this.generateAccessToken(result.id)
+                return {token:this.generateAccessToken(result.id)}
             }
+        })
+    }
+
+    register(username, email, password){
+        return UserService.createUser(username, email, password)
+        .then((result)=>{
+            return {token:this.generateAccessToken(result.id)}
         })
     }
 
