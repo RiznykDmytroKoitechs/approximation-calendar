@@ -7,7 +7,8 @@ const { body, validationResult } = require('express-validator');
 const dateValidator = (req, res, next)=>{
     if(typeof(req.body.date)!=="undefined"){
         const reqestDate = new Date(req.body.date)
-        if(reqestDate.toString()==="Invalid Date" || reqestDate > Date.now() || reqestDate < (Date.now()- 1000*60*60*24)){
+        const yesterday = new Date(new Date().getFullYear, new Date().getMonth(), new Date().getDay()-1)
+        if(reqestDate.toString()==="Invalid Date" || reqestDate > Date.now() || reqestDate < yesterday){
             return res.status(400).send("Invalid Date")
         }
     }
@@ -30,7 +31,7 @@ body('hours').isFloat({min:0.01, max:10}).withMessage("Enter a valid amount of h
     const {date, hours, comment} = req.body
     console.log(date,hours,comment)
     EntryService.createEntry({date, hours, comment, ownerId:req.user.id}).then((result)=>{
-        res.send({token:result});
+        res.send({result});
     }).catch((err)=>{
         console.log(err)
         res.status(400).send({message:err.message})
@@ -49,7 +50,7 @@ body('id').isUUID('4').withMessage("Invalid ID"),
     const {date, hours, comment, id} = req.body
     console.log(date,hours,comment, id)
     EntryService.editEntry({date, hours, comment, id}).then((result)=>{
-        res.send({token:result});
+        res.send({result});
     }).catch((err)=>{
         console.log(err)
         res.status(400).send({message:err.message})

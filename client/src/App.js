@@ -3,6 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AuthPage from "./components/AuthPage/AuthPage";
+import TestPage from "./components/ViewingPage/testPage";
 import ViewingPage from "./components/ViewingPage/ViewingPage";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/posts" element={<ViewingPage />} />
+        <Route path="/test" element={<TestPage/>}/>
       </Routes>
     </Box>
     );
