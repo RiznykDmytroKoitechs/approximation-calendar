@@ -10,7 +10,7 @@ function App() {
   return (
     <Box
       sx={{
-      backgroundColor: "#424549",
+        backgroundColor: "#424549",
         minHeight: "100vh",
         padding: "50px 0px",
       }}
@@ -18,10 +18,10 @@ function App() {
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/posts" element={<ViewingPage />} />
-        <Route path="/test" element={<TestPage/>}/>
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </Box>
-    );
+  );
 }
 
 export default App;
