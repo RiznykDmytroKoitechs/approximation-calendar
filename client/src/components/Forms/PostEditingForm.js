@@ -56,7 +56,7 @@ export default function EditForm({postSetter, posts, id, setEditIndex}) {
             newPosts[id] = {
                 id:postInfo.id,
                 comment: comment,
-                hours:hours.value,
+                hours:Number(hours.value),
                 date:date.value.format()
             }
             console.log(newPosts[id])

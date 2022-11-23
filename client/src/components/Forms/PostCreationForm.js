@@ -22,7 +22,7 @@ export default function PostForm({postSetter, posts}) {
             },
             body:JSON.stringify({
                 comment:comment,
-                hours:hours.value,
+                hours:Number(hours.value),
                 date:date.value.toDate()
             })
         })

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import PostForm from "../Forms/PostCreationForm";
 import EditIcon from '@mui/icons-material/Edit';
 import EditForm from "../Forms/PostEditingForm";
+import ActivityGraph from "./ActivityGraph";
 
 export default function ViewingPage(){
     const [editingIndex, setEditingIndex] = useState(-1)
@@ -151,6 +152,7 @@ export default function ViewingPage(){
             rowsPerPageOptions={[5,10,25,50]}
             onRowsPerPageChange={onRowsPerPageChange}
             />
+            <ActivityGraph postData={postsData}/>
         </Container>
     )
 }
