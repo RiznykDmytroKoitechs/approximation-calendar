@@ -22,34 +22,34 @@ ChartJS.defaults.color = "#FFF"
 
 function ActivityGraph({postData}){
     const labels = [
-        moment().day(-6).format("dddd"), 
-        moment().day(-5).format("dddd"),
-        moment().day(-4).format("dddd"),
-        moment().day(-3).format("dddd"),
-        moment().day(-2).format("dddd"),
-        moment().day(-1).format("dddd"),
+        moment().subtract(6, 'days').format("dddd"), 
+        moment().subtract(5, 'days').format("dddd"),
+        moment().subtract(4, 'days').format("dddd"),
+        moment().subtract(3, 'days').format("dddd"),
+        moment().subtract(2, 'days').format("dddd"),
+        moment().subtract(1, 'days').format("dddd"),
         moment().format("dddd")
     ];
 
     const graphData = [0,0,0,0,0,0,0]
     postData.forEach(element => {
-        if(moment(element.date) > moment().day(-6).startOf('day')){
+        if(moment(element.date) > moment().subtract(6, 'days').startOf('day')){
             if (moment(element.date) > moment().startOf('day')){
                 graphData[6]+=element.hours;
             }
-            else if (moment(element.date) > moment().day(-1).startOf('day')){
+            else if (moment(element.date) > moment().subtract(1, 'days').startOf('day')){
                 graphData[5]+=element.hours;
             } 
-            else if (moment(element.date) > moment().day(-2).startOf('day')){
+            else if (moment(element.date) > moment().subtract(2, 'days').startOf('day')){
                 graphData[4]+=element.hours;
             } 
-            else if (moment(element.date) > moment().day(-3).startOf('day')){
+            else if (moment(element.date) > moment().subtract(3, 'days').startOf('day')){
                 graphData[3]+=element.hours;
             }
-            else if (moment(element.date) > moment().day(-4).startOf('day')){
+            else if (moment(element.date) > moment().subtract(4, 'days').startOf('day')){
                 graphData[2]+=element.hours;
             }
-            else if(moment(element.date) > moment().day(-5).startOf('day')){
+            else if(moment(element.date) > moment().subtract(5, 'days').startOf('day')){
                 graphData[1]+=element.hours;
             }
             else {
@@ -76,7 +76,6 @@ function ActivityGraph({postData}){
           },
         ],
       };
-    console.log(data)
 
   return (
     <Container>

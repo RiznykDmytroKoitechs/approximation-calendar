@@ -4,12 +4,15 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import moment from "moment";
 import { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from "react-router";
 
 export default function EditForm({postSetter, posts, id, setEditIndex}) {
     const postInfo = posts[id]
     const [date, setDate] = useState({value:moment(new Date(postInfo.date)), errorState:false})
     const [hours, setHours] = useState({value:postInfo.hours, errorState:false})
     const [comment, setComment] = useState(postInfo.comment?postInfo.comment:"")
+
+    const navigate = useNavigate()
 
     useEffect(()=>{
         onChangeDate(moment(postInfo.date))

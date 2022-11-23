@@ -4,11 +4,14 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import moment from "moment";
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router";
 
 export default function PostForm({postSetter, posts}) {
     const [date, setDate] = useState({value:moment(), errorState:false})
     const [hours, setHours] = useState({value:1, errorState:false})
     const [comment, setComment] = useState()
+
+    const navigate = useNavigate()
 
     const postThePost = () => {
         const token = localStorage.getItem("Auth token")

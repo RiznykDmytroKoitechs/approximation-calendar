@@ -52,7 +52,6 @@ export default function ViewingPage(){
             }
         })
         .then((res)=>{
-            console.log(res)
             setPostsData(res)
         })
         .catch((err)=>{
