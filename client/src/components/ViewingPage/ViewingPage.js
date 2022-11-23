@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import PostForm from "../Forms/PostCreationForm";
 import EditIcon from "@mui/icons-material/Edit";

@@ -1,6 +1,8 @@
+import React from "react";
 import { Button, Container, Divider, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 
 export default function RegistrationForm() {
   const [name, setName] = useState("");

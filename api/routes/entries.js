@@ -1,81 +1,109 @@
-var express = require('express');
-var EntryService = require('../services/entryServise')
+var express = require("express");
+var EntryService = require("../services/entryServise");
 var router = express.Router();
-var passport = require('passport')
-const { body, validationResult } = require('express-validator');
+var passport = require("passport");
+const { body, validationResult } = require("express-validator");
 
-const dateValidator = (req, res, next)=>{
-    if(typeof(req.body.date)!=="undefined"){
-        const reqestDate = new Date(req.body.date)
-        const yesterday = new Date(new Date().getFullYear, new Date().getMonth(), new Date().getDay()-1)
-        if(reqestDate.toString()==="Invalid Date" || reqestDate > Date.now() || reqestDate < yesterday){
-            return res.status(400).send("Invalid Date")
-        }
+const dateValidator = (req, res, next) => {
+  if (typeof req.body.date !== "undefined") {
+    const reqestDate = new Date(req.body.date);
+    const yesterday = new Date(
+      new Date().getFullYear,
+      new Date().getMonth(),
+      new Date().getDay() - 1
+    );
+    if (
+      reqestDate.toString() === "Invalid Date" ||
+      reqestDate > Date.now() ||
+      reqestDate < yesterday
+    ) {
+      return res.status(400).send("Invalid Date");
     }
-    next()
-}
+  }
+  next();
+};
 
-router.all('/',passport.authenticate('jwt', {session:false}), 
-(req, res, next)=>{
-    next()
-})
+router.all(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    next();
+  }
+);
 
-router.post('/',
-dateValidator,
-body('hours').isFloat({min:0.01, max:10}).withMessage("Enter a valid amount of hours"),
-(req, res)=>{
-    const errors = validationResult(req)
+router.post(
+  "/",
+  dateValidator,
+  body("hours")
+    .isFloat({ min: 0.01, max: 10 })
+    .withMessage("Enter a valid amount of hours"),
+  (req, res) => {
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
-    const {date, hours, comment} = req.body
-    console.log(date,hours,comment)
-    EntryService.createEntry({date, hours, comment, ownerId:req.user.id}).then((result)=>{
-        res.send({result});
-    }).catch((err)=>{
-        console.log(err)
-        res.status(400).send({message:err.message})
-    })
-})
+    const { date, hours, comment } = req.body;
+    console.log(date, hours, comment);
+    EntryService.createEntry({ date, hours, comment, ownerId: req.user.id })
+      .then((result) => {
+        res.send({ result });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send({ message: err.message });
+      });
+  }
+);
 
-router.put('/',
-dateValidator,
-body('hours').optional().isFloat({min:0.01, max:10}).withMessage("Enter a valid amount of hours"),
-body('id').isUUID('4').withMessage("Invalid ID"),
-(req, res)=>{
-    const errors = validationResult(req)
+router.put(
+  "/",
+  dateValidator,
+  body("hours")
+    .optional()
+    .isFloat({ min: 0.01, max: 10 })
+    .withMessage("Enter a valid amount of hours"),
+  body("id").isUUID("4").withMessage("Invalid ID"),
+  (req, res) => {
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
-    const {date, hours, comment, id} = req.body
-    console.log(date,hours,comment, id)
-    EntryService.editEntry({date, hours, comment, id}).then((result)=>{
-        res.send({result});
-    }).catch((err)=>{
-        console.log(err)
-        res.status(400).send({message:err.message})
-    })
-})
+    const { date, hours, comment, id } = req.body;
+    console.log(date, hours, comment, id);
+    EntryService.editEntry({ date, hours, comment, id })
+      .then((result) => {
+        res.send({ result });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send({ message: err.message });
+      });
+  }
+);
 
-
-router.get('/',
-dateValidator,
-body('pagination').optional().isInt({max:40, min:1}).withMessage("Invalid pagination"),
-body('page').optional().isInt({min:0}).withMessage("Invalid page"),
-(req, res)=>{
-    const errors = validationResult(req)
+router.get(
+  "/",
+  dateValidator,
+  body("pagination")
+    .optional()
+    .isInt({ max: 40, min: 1 })
+    .withMessage("Invalid pagination"),
+  body("page").optional().isInt({ min: 0 }).withMessage("Invalid page"),
+  (req, res) => {
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
-    const {pagination, page} = req.body
+    const { pagination, page } = req.body;
     EntryService.getEntriesByUserId(req.user.id, pagination, page)
-    .then((result)=>{
-        res.send(result)
-    })
-    .catch((err)=>{
-        console.log(err)
-        res.status(400).send({message:err.message})
-    })
-})
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send({ message: err.message });
+      });
+  }
+);
 
 module.exports = router;

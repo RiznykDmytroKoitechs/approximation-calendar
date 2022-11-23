@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import React, { memo } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,

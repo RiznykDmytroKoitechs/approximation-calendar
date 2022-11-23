@@ -1,10 +1,11 @@
-import { Button, IconButton, Paper, TextField } from "@mui/material";
+import { IconButton, Paper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import moment from "moment";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router";
+import React from "react";
 
 export default function PostForm({ postSetter, posts }) {
   const [date, setDate] = useState({ value: moment(), errorState: false });

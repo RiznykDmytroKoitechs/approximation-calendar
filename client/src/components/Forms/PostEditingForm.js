@@ -1,11 +1,11 @@
-import { Button, IconButton, Paper, TextField } from "@mui/material";
+import { IconButton, Paper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router";
-
+import React from "react";
 export default function EditForm({ postSetter, posts, id, setEditIndex }) {
   const postInfo = posts[id];
   const [date, setDate] = useState({
@@ -60,7 +60,7 @@ export default function EditForm({ postSetter, posts, id, setEditIndex }) {
           }
         }
       })
-      .then((res) => {
+      .then(() => {
         const newPosts = posts.slice();
         newPosts[id] = {
           id: postInfo.id,
